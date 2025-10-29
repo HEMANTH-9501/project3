@@ -4,7 +4,8 @@ import App from "./App"
 import "./index.css"
 
 async function enableMocking() {
-  const useMsw = (import.meta && import.meta.env && import.meta.env.VITE_ENABLE_MSW) !== 'false'
+  const explicitFlag = import.meta && import.meta.env && import.meta.env.VITE_ENABLE_MSW
+  const useMsw = import.meta.env.DEV ? explicitFlag !== 'false' : explicitFlag === 'true'
   if (!useMsw) {
     return
   }
