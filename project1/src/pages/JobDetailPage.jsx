@@ -1,3 +1,4 @@
+import { getApiUrl } from "../config/api"
 import { useParams } from "react-router-dom"
 import { useQuery, useMutation, useQueryClient } from "react-query"
 import "./JobDetailPage.css"
@@ -11,14 +12,14 @@ export default function JobDetailPage() {
     isLoading,
     error,
   } = useQuery(["job", jobId], async () => {
-    const response = await fetch(`/api/jobs/${jobId}`)
+    const response = await fetch(getApiUrl(`/api/jobs/${jobId}`))
     if (!response.ok) throw new Error("Failed to fetch job")
     return response.json()
   })
 
   const mutation = useMutation(
     async (newStatus) => {
-      const response = await fetch(`/api/jobs/${jobId}`, {
+      const response = await fetch(getApiUrl(`/api/jobs/${jobId}`), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),

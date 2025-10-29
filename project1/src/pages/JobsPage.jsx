@@ -1,3 +1,4 @@
+import { getApiUrl } from "../config/api"
 import { useState } from "react"
 import { useQuery } from "react-query"
 import { useToast } from "../contexts/ToastContext"
@@ -25,7 +26,7 @@ export default function JobsPage() {
         status: status === "all" ? "" : status,
         tags: selectedTags.join(","),
       })
-      const response = await fetch(`/api/jobs?${params}`)
+      const response = await fetch(getApiUrl(`/api/jobs?${params}`))
       if (!response.ok) throw new Error("Failed to fetch jobs")
       return response.json()
     }
@@ -34,7 +35,7 @@ export default function JobsPage() {
   const handleReorderJob = async (jobId, fromOrder, toOrder) => {
     setIsReordering(true)
     try {
-      const response = await fetch(`/api/jobs/${jobId}/reorder`, {
+      const response = await fetch(getApiUrl(`/api/jobs/${jobId}/reorder`), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fromOrder, toOrder }),
@@ -61,7 +62,7 @@ export default function JobsPage() {
 
   const handleArchiveJob = async (jobId, currentStatus) => {
     try {
-      const response = await fetch(`/api/jobs/${jobId}`, {
+      const response = await fetch(getApiUrl(`/api/jobs/${jobId}`), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

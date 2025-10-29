@@ -1,3 +1,4 @@
+import { getApiUrl } from "../../config/api"
 import { useState, useEffect } from "react"
 import { useMutation } from "react-query"
 import { QuestionType, ConditionalType } from "../../types"
@@ -17,7 +18,7 @@ export default function FormRuntime({ assessment, candidateId, onSubmit, onSaveD
 
   const saveDraftMutation = useMutation(
     async (data) => {
-      const response = await fetch(`/api/assessments/${assessment.jobId}/submit`, {
+      const response = await fetch(getApiUrl(`/api/assessments/${assessment.jobId}/submit`), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -41,7 +42,7 @@ export default function FormRuntime({ assessment, candidateId, onSubmit, onSaveD
 
   const submitMutation = useMutation(
     async (data) => {
-      const response = await fetch(`/api/assessments/${assessment.jobId}/submit`, {
+      const response = await fetch(getApiUrl(`/api/assessments/${assessment.jobId}/submit`), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

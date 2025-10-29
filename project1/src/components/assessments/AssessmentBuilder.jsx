@@ -1,3 +1,4 @@
+import { getApiUrl } from "../../config/api"
 import { useState, useEffect } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { v4 as uuidv4 } from "uuid"
@@ -48,7 +49,7 @@ export default function AssessmentBuilder({ jobId, assessment, addToast }) {
 
   const saveMutation = useMutation(
     async (data) => {
-      const response = await fetch(`/api/assessments/${jobId}`, {
+      const response = await fetch(getApiUrl(`/api/assessments/${jobId}`), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

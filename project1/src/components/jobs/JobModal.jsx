@@ -1,3 +1,4 @@
+import { getApiUrl } from "../../config/api"
 "use client"
 
 import { useState } from "react"
@@ -22,7 +23,7 @@ export default function JobModal({ job, onClose, onSave, addToast }) {
       const url = job ? `/api/jobs/${job.id}` : "/api/jobs"
       console.log(url);
       const method = job ? "PATCH" : "POST"
-      const response = await fetch(url, {
+      const response = await fetch(getApiUrl(url), {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

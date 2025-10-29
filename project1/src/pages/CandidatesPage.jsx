@@ -1,3 +1,4 @@
+import { getApiUrl } from "../config/api"
 import { useState, useRef } from "react"
 import { useQuery } from "react-query"
 import CandidatesList from "../components/candidates/CandidatesList"
@@ -28,7 +29,7 @@ export default function CandidatesPage({ addToast }) {
     ["candidateAssessment", selectedCandidate?.id],
     async () => {
       if (!selectedCandidate) return null
-      const response = await fetch(`/api/candidates/${selectedCandidate.id}/assessment`)
+      const response = await fetch(getApiUrl(`/api/candidates/${selectedCandidate.id}/assessment`))
       if (!response.ok) throw new Error("Failed to fetch assessment")
       return response.json()
     },
@@ -45,7 +46,7 @@ export default function CandidatesPage({ addToast }) {
         search,
         stage: stage === "all" ? "" : stage,
       })
-      const response = await fetch(`/api/candidates?${params}`)
+      const response = await fetch(getApiUrl(`/api/candidates?${params}`))
       console.log("Candidates API response status:", response.status)
       if (!response.ok) throw new Error("Failed to fetch candidates")
       const data = await response.json()
@@ -64,7 +65,7 @@ export default function CandidatesPage({ addToast }) {
     ["candidateTimeline", selectedCandidate?.id],
     async () => {
       if (!selectedCandidate) return null
-      const response = await fetch(`/api/candidates/${selectedCandidate.id}/timeline`)
+      const response = await fetch(getApiUrl(`/api/candidates/${selectedCandidate.id}/timeline`))
       if (!response.ok) throw new Error("Failed to fetch timeline")
       return response.json()
     },
@@ -73,7 +74,7 @@ export default function CandidatesPage({ addToast }) {
 
   const handleStageChange = async (candidateId, newStage) => {
     try {
-      const response = await fetch(`/api/candidates/${candidateId}`, {
+      const response = await fetch(getApiUrl(`/api/candidates/${candidateId}`), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ stage: newStage }),

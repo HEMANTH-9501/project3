@@ -1,3 +1,4 @@
+import { getApiUrl } from "../../config/api"
 import { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import "./JobsList.css"
@@ -74,7 +75,7 @@ export default function JobsList({ jobs = [], onEdit, onArchive, onReorder, isRe
 
   const reorderMutation = useMutation(
     async ({ fromOrder, toOrder }) => {
-      const response = await fetch(`/api/jobs/reorder`, {
+      const response = await fetch(getApiUrl(`/api/jobs/reorder`), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fromOrder, toOrder }),

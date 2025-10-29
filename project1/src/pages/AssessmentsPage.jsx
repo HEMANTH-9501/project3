@@ -1,3 +1,4 @@
+import { getApiUrl } from "../config/api"
 import { useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useQuery } from "react-query"
@@ -22,13 +23,13 @@ export default function AssessmentsPage() {
     // Always declare hooks first
     const jobsQuery = useQuery(["jobs", 1, "", "all", ""], async () => {
       const params = new URLSearchParams({ page: 1, pageSize: 100 })
-      const response = await fetch(`/api/jobs?${params}`)
+      const response = await fetch(getApiUrl(`/api/jobs?${params}`))
       if (!response.ok) throw new Error("Failed to fetch jobs")
       return response.json()
     }, { enabled: !jobId })
 
     const assessmentQuery = useQuery(["assessment", jobId], async () => {
-      const response = await fetch(`/api/assessments/${jobId}`)
+      const response = await fetch(getApiUrl(`/api/assessments/${jobId}`))
       if (!response.ok) throw new Error("Failed to fetch assessment")
       return response.json()
     }, { enabled: !!jobId })

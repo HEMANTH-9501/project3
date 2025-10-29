@@ -1,3 +1,4 @@
+import { getApiUrl } from "../config/api"
 import { useParams } from "react-router-dom"
 import { useQuery } from "react-query"
 import "./CandidateDetailPage.css"
@@ -9,13 +10,13 @@ export default function CandidateDetailPage({ addToast }) {
     isLoading,
     error,
   } = useQuery(["candidate", id], async () => {
-    const response = await fetch(`/api/candidates/${id}`)
+    const response = await fetch(getApiUrl(`/api/candidates/${id}`))
     if (!response.ok) throw new Error("Failed to fetch candidate")
     return response.json()
   })
 
   const { data: timeline } = useQuery(["candidateTimeline", id], async () => {
-    const response = await fetch(`/api/candidates/${id}/timeline`)
+    const response = await fetch(getApiUrl(`/api/candidates/${id}/timeline`))
     if (!response.ok) throw new Error("Failed to fetch timeline")
     return response.json()
   })
